@@ -14,7 +14,8 @@ import json
 
 import requests
 from flask import Flask, request, make_response
-from utils.exception import StyleException, WrongParameterException
+
+
 import traceback
 
 cwd = os.getcwd()
@@ -24,8 +25,11 @@ for i in upper_cwd_list:
     i = '/' + str(i)
     upper_cwd = str(upper_cwd)+str(i)
 sys.path.append(upper_cwd)
+print(sys.path)
 
 from flowjob import flow_model
+from utils.exception import StyleException, WrongParameterException
+
 
 app = Flask(__name__)
 
