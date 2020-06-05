@@ -85,7 +85,7 @@ def main():
             return json.dumps(result,  ensure_ascii = False)
         else:
             print(str(i)+"请求图片失败")
-    except RequestException:
+    except Exception as e:
         result = {}
         result['code'] = -1
         result['msg'] = 'error'
