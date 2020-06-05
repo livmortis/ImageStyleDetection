@@ -10,27 +10,27 @@ import element_array as ea
 
 class flow_model:
 
-    def inference_inet(self, img, gy):
+    def inference_inet(self, img, gy, gyid):
         result = []
         img = [img]
         # 复杂度
-        res_complex = cmplx.compJudge(img, 0, gy)
+        res_complex = cmplx.compJudge(img, 0, gy, gyid)
         result.append(res_complex)
         #
         # 轮廓形状
-        cont_shape = cts.clasConShape(img, 0, gy)
+        cont_shape = cts.clasConShape(img, 0, gy, gyid)
         result.append(cont_shape)
 
         # 对称
-        symmetric = syt.judgeSym(img, 0, gy)
+        symmetric = syt.judgeSym(img, 0, gy, gyid)
         result.append(symmetric)
 
         # 扁瘦
-        wOrh = wh.classifyRatio(img, 0, gy)
+        wOrh = wh.classifyRatio(img, 0, gy, gyid)
         result.append(wOrh)
 
         # 阵列
-        ifArr = ea.classifyArray(img, 0, gy)
+        ifArr = ea.classifyArray(img, 0, gy, gyid)
         result.append(ifArr)
         return result
 

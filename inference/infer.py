@@ -32,14 +32,14 @@ app = Flask(__name__)
 base_url = 'https://oss.looodesign.com/test/png-500/'
 
 
-def inference(pngpath, gy):
+def inference(pngpath, gy, gyid):
     model = flow_model()
-    output = model.inference_inet(pngpath, gy)
+    output = model.inference_inet(pngpath, gy, gyid)
     return output
 
 
 
-def png_2output(content, num, gy):
+def png_2output(content, num, gy, gyid):
     png_path = "../../data/inferenceTempImg/png"
 
     try:
@@ -52,7 +52,7 @@ def png_2output(content, num, gy):
         with open(png_file_path, 'wb') as f:
             f.write(content)
             f.close()
-    output = inference(png_path + '/' + str(num) + '.png', gy)
+    output = inference(png_path + '/' + str(num) + '.png', gy, gyid)
     os.system('rm %s' % (png_path + '/' + str(num) + '.png'))
 
     return output, num
@@ -71,12 +71,13 @@ def get_args(arg=None, required=True):
 def main():
     i = get_args('i')
     gy = get_args('gy')
+    gyid = int(get_args('gyid'))
     url = base_url + str(i) + ".png"
     print(i)
     response = requests.get(url, timeout=5)
     try:
         if response.status_code == 200:
-            output, num = png_2output(response.content, i, gy)
+            output, num = png_2output(response.content, i, gy, gyid)
             result = {}
             result['code'] = 0
             result['msg'] = 'success'

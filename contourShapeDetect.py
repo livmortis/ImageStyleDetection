@@ -6,7 +6,8 @@ import os
 import sys
 import config as cf
 
-ori_path = "../data/testsym/ori/"
+# ori_path = "../data/testsym/ori/"
+ori_path = "../data/connectivity/ori/"
 test_show = False
 def alpha_bg_to_white(img):
     B_channel = img[:,:,0]
@@ -211,14 +212,21 @@ def surroundContour(img, img_name, biggest_cont, H, W):
 
 
 
-def clasConShape(listdir, mode, gy):
+def clasConShape(listdir, mode, gy, gyid):
     if gy != -1:
         if gy == cf.SJX  :
             return '角轮廓'
         elif gy == cf.GZ:
-            return "弧形轮廓"
+            if gyid in [30,33,36,39]:
+                return "方正轮廓"
+            else:
+                return "弧形轮廓"
         elif gy == cf.PZ:
-            #TODO
+            if gyid <200:
+                return "弧形轮廓"
+            elif gyid>=200 and gyid<300:
+                return "方正轮廓"
+
 
     for img_name in listdir:
         if mode:
@@ -356,4 +364,4 @@ if __name__ == "__main__":
     if test_show:
         # listdir = ['377925.png']
         listdir = ['367640.png']
-    clasConShape(listdir, mode)
+    clasConShape(listdir, mode, -1)

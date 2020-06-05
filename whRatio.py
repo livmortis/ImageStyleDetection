@@ -7,7 +7,7 @@ import sys
 
 ori_path = "../data/testsym/ori/"       # 用检测对称的原图
 
-def classifyRatio(listdir, mode):
+def classifyRatio(listdir, mode, gy, gyid):
 
     for img_name in listdir:
         # print(img_name)

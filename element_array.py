@@ -71,10 +71,14 @@ def manhattanDist(dot1, dot2):
 
 import config as cf
 
-def classifyArray(listdir, mode, gy):
+def classifyArray(listdir, mode, gy, gyid):
     if gy != -1:
-        if gy == cf.XTYS or gy == cf.CF or gy == cf.DCX or gy == cf.ZW  :
+        if gy == cf.XTYS or gy == cf.CF or gy == cf.DCX or gy == cf.ZW:
             return '阵列'
+        elif gy == cf.TD:
+            if (gyid>=0 and gyid < 30) or gyid in [44,45,46,47]:
+                return '阵列'
+
 
 
     sift = cv2.xfeatures2d.SIFT_create()
@@ -225,8 +229,8 @@ def classifyArray(listdir, mode, gy):
             # c、计算0的个数
             z_zeron_list =z_dists[z_dists==0]
             zero_num = len(z_zeron_list)
-            # if test_show:
-            print('0的个数：'+str(zero_num))
+            if test_show:
+                print('0的个数：'+str(zero_num))
 
             # d、0的个数除以总个数
             total_len = len(z_dists)

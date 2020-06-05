@@ -224,10 +224,13 @@ def pixel_cosin_method(mode, img_name,img):     # 余弦距离和欧氏距离
 
 
 
-def judgeSym(listdir, mode, gy):
+def judgeSym(listdir, mode, gy, gyid):
     if gy != -1:
         if gy == cf.XTYS  or gy == cf.CF:
-            return '对称'
+            return "对称"
+        elif gy == cf.TD:
+            if gyid in [8,9,10,11] or gyid in [26,27,28,29] or gyid in [44,45,46,47] :
+                return "对称"
 
     for img_name in listdir:
         if mode:

@@ -69,7 +69,7 @@ def alpha_bg_to_white(img):
     return img
 
 
-def compJudge(listdir, mode, gy):
+def compJudge(listdir, mode, gy, gyid):
     if gy != -1:
         if gy == cf.CF or gy ==cf.XTYS or gy == cf.ZW or gy == cf.DCX  :
             return '复杂'
