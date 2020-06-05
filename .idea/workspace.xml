@@ -1,0 +1,338 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="7066ddb6-7ee2-41f2-8034-c37351edb943" name="Default Changelist" comment="" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FavoritesManager">
+    <favorites_list name="code" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectId" id="1c6q7wYr6rp2mCEYUJUMPXv5QPh" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showExcludedFiles" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.mappings" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.highlight.symlinks" value="true" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.date" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.permissions" value="false" />
+    <property name="WebServerToolWindowPanel.toolwindow.show.size" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/web" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/web" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/utils" />
+      <recent name="$PROJECT_DIR$" />
+    </key>
+  </component>
+  <component name="RunManager" selected="Python.webDisp">
+    <configuration name="element_array" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="code" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/element_array.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="infer" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="code" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/inference" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/inference/infer.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="symmetrical_by_hist" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="code" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/symmetrical_by_hist.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="webDisp" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="code" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/web" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/web/webDisp.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration name="whRatio" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="code" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/whRatio.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.webDisp" />
+        <item itemvalue="Python.element_array" />
+        <item itemvalue="Python.infer" />
+        <item itemvalue="Python.symmetrical_by_hist" />
+        <item itemvalue="Python.whRatio" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="ServiceViewManager">
+    <option name="viewStates">
+      <list>
+        <serviceView>
+          <treeState>
+            <expand />
+            <select />
+          </treeState>
+        </serviceView>
+      </list>
+    </option>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="7066ddb6-7ee2-41f2-8034-c37351edb943" name="Default Changelist" comment="" />
+      <created>1589859227534</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1589859227534</updated>
+      <workItem from="1589859237826" duration="44611000" />
+      <workItem from="1590110975348" duration="7017000" />
+      <workItem from="1590126144797" duration="11093000" />
+      <workItem from="1590370559577" duration="7343000" />
+      <workItem from="1590394949441" duration="6186000" />
+      <workItem from="1590457155901" duration="66151000" />
+      <workItem from="1590715236073" duration="39144000" />
+      <workItem from="1591061417921" duration="28222000" />
+      <workItem from="1591235303994" duration="23483000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="1" />
+  </component>
+  <component name="WindowStateProjectService">
+    <state x="611" y="243" key="#com.intellij.fileTypes.FileTypeChooser" timestamp="1590114972776">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="611" y="243" key="#com.intellij.fileTypes.FileTypeChooser/0.23.1440.797@0.23.1440.797" timestamp="1590114972776" />
+    <state width="1398" height="137" key="GridCell.Tab.0.bottom" timestamp="1591267271887">
+      <screen x="0" y="23" width="1440" height="798" />
+    </state>
+    <state width="1398" height="358" key="GridCell.Tab.0.bottom/0.0.1440.900@0.0.1440.900" timestamp="1591259614767" />
+    <state width="1067" height="135" key="GridCell.Tab.0.bottom/0.23.1440.797@0.23.1440.797" timestamp="1591249553470" />
+    <state width="1398" height="137" key="GridCell.Tab.0.bottom/0.23.1440.798@0.23.1440.798" timestamp="1591267271887" />
+    <state width="1252" height="283" key="GridCell.Tab.0.bottom/0.23.1440.801@0.23.1440.801" timestamp="1591261902287" />
+    <state width="1252" height="29" key="GridCell.Tab.0.bottom/0.23.1440.804@0.23.1440.804" timestamp="1591262944875" />
+    <state width="1252" height="321" key="GridCell.Tab.0.bottom/0.23.1440.806@0.23.1440.806" timestamp="1591262558762" />
+    <state width="1252" height="29" key="GridCell.Tab.0.bottom/0.23.1440.808@0.23.1440.808" timestamp="1591263113172" />
+    <state width="1398" height="137" key="GridCell.Tab.0.center" timestamp="1591267271886">
+      <screen x="0" y="23" width="1440" height="798" />
+    </state>
+    <state width="1398" height="358" key="GridCell.Tab.0.center/0.0.1440.900@0.0.1440.900" timestamp="1591259614765" />
+    <state width="1067" height="135" key="GridCell.Tab.0.center/0.23.1440.797@0.23.1440.797" timestamp="1591249553469" />
+    <state width="1398" height="137" key="GridCell.Tab.0.center/0.23.1440.798@0.23.1440.798" timestamp="1591267271886" />
+    <state width="1252" height="283" key="GridCell.Tab.0.center/0.23.1440.801@0.23.1440.801" timestamp="1591261902285" />
+    <state width="1252" height="29" key="GridCell.Tab.0.center/0.23.1440.804@0.23.1440.804" timestamp="1591262944874" />
+    <state width="1252" height="321" key="GridCell.Tab.0.center/0.23.1440.806@0.23.1440.806" timestamp="1591262558760" />
+    <state width="1252" height="29" key="GridCell.Tab.0.center/0.23.1440.808@0.23.1440.808" timestamp="1591263113171" />
+    <state width="1398" height="137" key="GridCell.Tab.0.left" timestamp="1591267271885">
+      <screen x="0" y="23" width="1440" height="798" />
+    </state>
+    <state width="1398" height="358" key="GridCell.Tab.0.left/0.0.1440.900@0.0.1440.900" timestamp="1591259614763" />
+    <state width="1067" height="135" key="GridCell.Tab.0.left/0.23.1440.797@0.23.1440.797" timestamp="1591249553469" />
+    <state width="1398" height="137" key="GridCell.Tab.0.left/0.23.1440.798@0.23.1440.798" timestamp="1591267271885" />
+    <state width="1252" height="283" key="GridCell.Tab.0.left/0.23.1440.801@0.23.1440.801" timestamp="1591261902285" />
+    <state width="1252" height="29" key="GridCell.Tab.0.left/0.23.1440.804@0.23.1440.804" timestamp="1591262944873" />
+    <state width="1252" height="321" key="GridCell.Tab.0.left/0.23.1440.806@0.23.1440.806" timestamp="1591262558759" />
+    <state width="1252" height="29" key="GridCell.Tab.0.left/0.23.1440.808@0.23.1440.808" timestamp="1591263113170" />
+    <state width="1398" height="137" key="GridCell.Tab.0.right" timestamp="1591267271886">
+      <screen x="0" y="23" width="1440" height="798" />
+    </state>
+    <state width="1398" height="358" key="GridCell.Tab.0.right/0.0.1440.900@0.0.1440.900" timestamp="1591259614766" />
+    <state width="1067" height="135" key="GridCell.Tab.0.right/0.23.1440.797@0.23.1440.797" timestamp="1591249553470" />
+    <state width="1398" height="137" key="GridCell.Tab.0.right/0.23.1440.798@0.23.1440.798" timestamp="1591267271886" />
+    <state width="1252" height="283" key="GridCell.Tab.0.right/0.23.1440.801@0.23.1440.801" timestamp="1591261902286" />
+    <state width="1252" height="29" key="GridCell.Tab.0.right/0.23.1440.804@0.23.1440.804" timestamp="1591262944874" />
+    <state width="1252" height="321" key="GridCell.Tab.0.right/0.23.1440.806@0.23.1440.806" timestamp="1591262558761" />
+    <state width="1252" height="29" key="GridCell.Tab.0.right/0.23.1440.808@0.23.1440.808" timestamp="1591263113171" />
+    <state width="1249" height="253" key="GridCell.Tab.1.bottom" timestamp="1590666669280">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1249" height="253" key="GridCell.Tab.1.bottom/0.0.1440.900@0.0.1440.900" timestamp="1590666669280" />
+    <state width="1291" height="253" key="GridCell.Tab.1.bottom/0.23.1440.797@0.23.1440.797" timestamp="1590373827268" />
+    <state width="1249" height="253" key="GridCell.Tab.1.bottom/0.23.1440.798@0.23.1440.798" timestamp="1590662696452" />
+    <state width="1249" height="253" key="GridCell.Tab.1.center" timestamp="1590666669279">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1249" height="253" key="GridCell.Tab.1.center/0.0.1440.900@0.0.1440.900" timestamp="1590666669279" />
+    <state width="1291" height="253" key="GridCell.Tab.1.center/0.23.1440.797@0.23.1440.797" timestamp="1590373827267" />
+    <state width="1249" height="253" key="GridCell.Tab.1.center/0.23.1440.798@0.23.1440.798" timestamp="1590662696452" />
+    <state width="1249" height="253" key="GridCell.Tab.1.left" timestamp="1590666669279">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1249" height="253" key="GridCell.Tab.1.left/0.0.1440.900@0.0.1440.900" timestamp="1590666669279" />
+    <state width="1291" height="253" key="GridCell.Tab.1.left/0.23.1440.797@0.23.1440.797" timestamp="1590373827266" />
+    <state width="1249" height="253" key="GridCell.Tab.1.left/0.23.1440.798@0.23.1440.798" timestamp="1590662696451" />
+    <state width="1249" height="253" key="GridCell.Tab.1.right" timestamp="1590666669279">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state width="1249" height="253" key="GridCell.Tab.1.right/0.0.1440.900@0.0.1440.900" timestamp="1590666669279" />
+    <state width="1291" height="253" key="GridCell.Tab.1.right/0.23.1440.797@0.23.1440.797" timestamp="1590373827268" />
+    <state width="1249" height="253" key="GridCell.Tab.1.right/0.23.1440.798@0.23.1440.798" timestamp="1590662696452" />
+    <state x="148" y="38" key="SettingsEditor" timestamp="1590560247470">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="148" y="38" key="SettingsEditor/0.23.1440.797@0.23.1440.797" timestamp="1590560247469" />
+    <state x="376" y="274" key="com.intellij.ide.util.TipDialog" timestamp="1591061417815">
+      <screen x="0" y="23" width="1440" height="797" />
+    </state>
+    <state x="376" y="284" key="com.intellij.ide.util.TipDialog/0.0.1440.900@0.0.1440.900" timestamp="1590715236562" />
+    <state x="376" y="274" key="com.intellij.ide.util.TipDialog/0.23.1440.797@0.23.1440.797" timestamp="1591061417815" />
+    <state x="376" y="274" key="com.intellij.ide.util.TipDialog/0.23.1440.798@0.23.1440.798" timestamp="1590394995124" />
+    <state x="426" y="185" width="673" height="472" key="find.popup" timestamp="1591260979807">
+      <screen x="0" y="23" width="1440" height="804" />
+    </state>
+    <state x="426" y="66" width="869" height="649" key="find.popup/0.0.1440.900@0.0.1440.900" timestamp="1591254174570" />
+    <state x="426" y="81" width="869" height="575" key="find.popup/0.23.1440.797@0.23.1440.797" timestamp="1591242884252" />
+    <state x="426" y="184" width="824" height="538" key="find.popup/0.23.1440.798@0.23.1440.798" timestamp="1591001981560" />
+    <state x="426" y="82" width="869" height="578" key="find.popup/0.23.1440.801@0.23.1440.801" timestamp="1591001832629" />
+    <state x="426" y="185" width="673" height="472" key="find.popup/0.23.1440.804@0.23.1440.804" timestamp="1591260979807" />
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup" timestamp="1590652468663">
+      <screen x="0" y="0" width="1440" height="900" />
+    </state>
+    <state x="385" y="196" width="670" height="676" key="search.everywhere.popup/0.0.1440.900@0.0.1440.900" timestamp="1590652468663" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/element_array.py</url>
+          <line>204</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/element_array.py</url>
+          <line>201</line>
+          <option name="timeStamp" value="2" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/element_array.py</url>
+          <line>205</line>
+          <option name="timeStamp" value="3" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
+          <url>file://$PROJECT_DIR$/element_array.py</url>
+          <line>209</line>
+          <option name="timeStamp" value="4" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
+  </component>
+  <component name="com.intellij.coverage.CoverageDataManagerImpl">
+    <SUITE FILE_PATH="coverage/code$symmetrical.coverage" NAME="symmetrical_by_hist Coverage Results" MODIFIED="1590027277401" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/code$infer.coverage" NAME="infer Coverage Results" MODIFIED="1591256113400" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/inference" />
+    <SUITE FILE_PATH="coverage/code$element_array.coverage" NAME="element_array Coverage Results" MODIFIED="1591262944853" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/code$test1.coverage" NAME="test1 Coverage Results" MODIFIED="1591151173276" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+    <SUITE FILE_PATH="coverage/code$connectivity_by_contour.coverage" NAME="connectivity_by_contour Coverage Results" MODIFIED="1590740133334" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/code$filter_triangle.coverage" NAME="filter_triangle Coverage Results" MODIFIED="1590116456822" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/utils" />
+    <SUITE FILE_PATH="coverage/code$whRatio.coverage" NAME="whRatio Coverage Results" MODIFIED="1591245554225" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/code$symmetrical_by_hist.coverage" NAME="symmetrical_by_hist Coverage Results" MODIFIED="1591245656204" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/code$svg2png.coverage" NAME="svg2png Coverage Results" MODIFIED="1590114640305" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/code$webDisp.coverage" NAME="webDisp Coverage Results" MODIFIED="1591263113156" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/web" />
+    <SUITE FILE_PATH="coverage/code$contourShapeDetect.coverage" NAME="contourShapeDetect Coverage Results" MODIFIED="1591245522508" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/code$webDsp.coverage" NAME="webDsp Coverage Results" MODIFIED="1590649538660" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/web" />
+    <SUITE FILE_PATH="coverage/code$connectivity_by_contourColor.coverage" NAME="connectivity_by_contourColor Coverage Results" MODIFIED="1590721956549" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/code$complexity.coverage" NAME="complexity Coverage Results" MODIFIED="1590663723175" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+  </component>
+</project>
