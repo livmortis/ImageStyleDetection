@@ -5,6 +5,7 @@ import os
 import sys
 import scipy.cluster.hierarchy as sch
 import sklearn.cluster as sc
+from utils.exception import ElementArrayException
 
 ori_path = "../data/testsym/ori/"
 # ori_path = "../data/selftest/"
@@ -72,205 +73,207 @@ def manhattanDist(dot1, dot2):
 import config as cf
 
 def classifyArray(listdir, mode, gy, gyid):
-    if gy != -1:
-        if gy == cf.XTYS or gy == cf.CF or gy == cf.DCX or gy == cf.ZW:
-            return '阵列'
-        elif gy == cf.TD:
-            if (gyid>=0 and gyid < 30) or gyid in [44,45,46,47]:
+    try:
+        if gy != -1:
+            if gy == cf.XTYS or gy == cf.CF or gy == cf.DCX or gy == cf.ZW:
                 return '阵列'
+            elif gy == cf.TD:
+                if (gyid>=0 and gyid < 30) or gyid in [44,45,46,47]:
+                    return '阵列'
 
 
 
-    sift = cv2.xfeatures2d.SIFT_create()
-    # surf = cv2.xfeatures2d.SURF_create()
+        sift = cv2.xfeatures2d.SIFT_create()
+        # surf = cv2.xfeatures2d.SURF_create()
 
-    for img_name in listdir:
-        if mode:
-            img_path = str(ori_path) + str(img_name)
-        else:
-            img_path = img_name
-
-        print(img_path)
-        src = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)  # 1 3 6 10
-        try:
-            imgshape = src.shape
-        except:
-            print(str(img_path)+"文件出错")
+        for img_name in listdir:
             if mode:
-                os.system('cp %s %s'%(img_path,'../data/array/error' ))
-                continue
+                img_path = str(ori_path) + str(img_name)
             else:
-                return "非阵列"
+                img_path = img_name
 
-        # src = cv2.resize(src, (512, int(512 * (imgshape[0]/imgshape[1])) ))
-        if test_draw:
-            cv2.imshow('aa', src)
-            cv2.waitKey(0)
-
-        img = alpha_bg_to_white(src)
-        if test_draw:
-            cv2.imshow('bb', img)
-            cv2.waitKey(0)
-
-        # 1、灰度变换
-        # img = cv2.Canny(img, 100, 200)
-        img = cv2.cvtColor(img, cv2.COLOR_RGBA2GRAY)
-        if test_draw:
-            cv2.imshow('cc', img)
-            cv2.waitKey(0)
-            # print(img[100])
-        # ret, img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY )
-
-        if test_draw:
-            cv2.imshow('dd', img)
-            cv2.waitKey(0)
-
-        # 2、sift特征检测
-        keypoints, descriptors = sift.detectAndCompute(img,None)
-        # keypoints, descriptors = surf.detectAndCompute(img,None)
-        keypoints_np = np.array(keypoints)
-        # print(keypoints_np.shape)
-
-        if test_draw:
-            img = cv2.drawKeypoints(image=img, keypoints= keypoints, outImage=img, color=(51,163,236), flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
-            cv2.imshow('a', img)
-            cv2.waitKey(0)
-
-        descriptors_np = np.array(descriptors)
-        # print(descriptors_np.shape)
-
-
-
-        # # # 3、遍历计算两两特征点(描述子)之间距离，通过此筛选高质量匹配点。
-        filtered_descriptors_indexes = []
-        if None in descriptors_np :
-            if mode:
-                print("没检测到关键点")
-                os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/array/error'))
-            else:
-                return "非阵列"
-        else:
-            for i, dot1 in enumerate(descriptors_np):
-                dot1_dists_dict = {}
-                for j, dot2 in enumerate(descriptors_np[i+1:]):
-                    dot1_idx = i        # dot1的索引
-                    dot2_idx = i+j+1    # dot2的索引
-                    dot1_idx_and_dot2_idx = str(dot1_idx)+','+str(dot2_idx)     # 如 ‘0,1’
-
-                    dist = manhattanDist(dot1, dot2)
-
-                    dot1_dists_dict[dot1_idx_and_dot2_idx] = dist
-
-                # print(dot1_dists_dict)           # 形如 {'0,1': 907.0, '0,2': 1408.0 ... '0,163': 1983.0}
-                sorted_dists = sorted(dot1_dists_dict.items(), key= lambda xzy : xzy[1])
-                # print(sorted_dists)             #  形如 [('0,127', 829.0), ('0,1', 907.0), ('0,146', 951.0)...  ('0,105', 4644.0)]
-                if len(sorted_dists) > 1:
-                    dot1_shotest_dist = sorted_dists[0]         # ('0,127', 829.0)      # 最近点
-                    dot1_secondShort_dist = sorted_dists[1]     #  ('0,1', 907.0)     # 第二近的点
-                    # if len(sorted_dists) < 6:
-                    #     dot1_fifthShort_dist = sorted_dists[-1]
-                    # else:
-                    #     dot1_fifthShort_dist = sorted_dists[5]                            # 第五近的点
-
-
-                    ratio = dot1_shotest_dist[1]/dot1_secondShort_dist[1]     # 829/907     # 1/2比值
-                    # ratio = dot1_shotest_dist[1]/dot1_fifthShort_dist[1]                  # 1/5比值
-
-
-                    if  ratio < T1 :
-                        dot1_idx_decode = str(dot1_shotest_dist[0]).split(',')[0]       # 0    点1的索引
-                        dot2_idx_decode = str(dot1_shotest_dist[0]).split(',')[1]     # 127     离点1最近的点2的索引
-                        # dot3_idx_decode = str(dot1_secondShort_dist[0]).split(',')[1]   # 1     离点1第二近的点3的索引
-
-                        filtered_descriptors_indexes.append(dot1_idx_decode)  # 保存本身点
-                        filtered_descriptors_indexes.append(dot2_idx_decode)    # 保存最近点
-                        # filtered_descriptors_indexes.append(dot3_idx_decode)    # 应该不保存第二近的点 ？？？
-
-
-            des = []
-
-            for idx in filtered_descriptors_indexes:
-                des.append(descriptors_np[int(idx)])
-            des = np.array(des)
-
-            if des.shape[0] <=2:    # 只有一个无法比较距离，下方会报错。
-                print('阵列，sift关键点小于2')
+            print(img_path)
+            src = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)  # 1 3 6 10
+            try:
+                imgshape = src.shape
+            except:
+                print(str(img_path)+"文件出错")
                 if mode:
-                    os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/array/disarray64'))
+                    os.system('cp %s %s'%(img_path,'../data/array/error' ))
                     continue
                 else:
                     return "非阵列"
 
+            # src = cv2.resize(src, (512, int(512 * (imgshape[0]/imgshape[1])) ))
+            if test_draw:
+                cv2.imshow('aa', src)
+                cv2.waitKey(0)
+
+            img = alpha_bg_to_white(src)
+            if test_draw:
+                cv2.imshow('bb', img)
+                cv2.waitKey(0)
+
+            # 1、灰度变换
+            # img = cv2.Canny(img, 100, 200)
+            img = cv2.cvtColor(img, cv2.COLOR_RGBA2GRAY)
+            if test_draw:
+                cv2.imshow('cc', img)
+                cv2.waitKey(0)
+                # print(img[100])
+            # ret, img = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY )
+
+            if test_draw:
+                cv2.imshow('dd', img)
+                cv2.waitKey(0)
+
+            # 2、sift特征检测
+            keypoints, descriptors = sift.detectAndCompute(img,None)
+            # keypoints, descriptors = surf.detectAndCompute(img,None)
+            keypoints_np = np.array(keypoints)
+            # print(keypoints_np.shape)
+
+            if test_draw:
+                img = cv2.drawKeypoints(image=img, keypoints= keypoints, outImage=img, color=(51,163,236), flags=cv2.DRAW_MATCHES_FLAGS_DRAW_RICH_KEYPOINTS)
+                cv2.imshow('a', img)
+                cv2.waitKey(0)
+
+            descriptors_np = np.array(descriptors)
+            # print(descriptors_np.shape)
 
 
-            disMat = sch.distance.pdist(des, 'euclidean')
-            # disMat = sch.distance.pdist(descriptors_np, 'euclidean')  # 不采用第三步。
 
-            Z = sch.linkage(disMat, method='average')
-            # sch.dendrogram(Z, leaf_rotation=90, leaf_font_size=6,)
-            # plt.show()
-
-            # # cluster = fcluster(Z, t=1, criterion='inconsistent')
-            # cluster = sch.fcluster(Z, t=20, criterion='distance')
-
-            z_dists = Z[:,2]
-            if(test_show):
-                print(Z)
-            # print(z_dists)
-
-            # a、计算距离100以内的匹配点的个数
-            # small_than_100_num = len(z_dists[z_dists<100])
-            # print(small_than_100_num)
-
-            # b、计算中位数
-            # z_median = np.median(z_dists)
-            # print(z_median)
-            #
-            # c、计算0的个数
-            z_zeron_list =z_dists[z_dists==0]
-            zero_num = len(z_zeron_list)
-            if test_show:
-                print('0的个数：'+str(zero_num))
-
-            # d、0的个数除以总个数
-            total_len = len(z_dists)
-            ratio = zero_num/total_len
-            if test_show:
-                print("目前策略，0的比例："+str(ratio))
-            # if (zero_num>40 and ratio > 0.45) or zero_num > 100:  # 保存了第二近的点
-            # if (zero_num>15 and ratio > 0.2) or zero_num > 50:     # 没保存第二近的点，仅保存本身点和最近点。 比值0.6. 优
-            # if (zero_num>20 and ratio > 0.3) or zero_num > 50:     # 没保存第二近的点，仅保存本身点和最近点。比值改为0.7。 第二优
-            if (zero_num>10  and ratio > 0.2) or zero_num > 20:     # 没保存第二近的点，仅保存本身点和最近点。比值改为0.7。 第二优
-            # if (zero_num>10 and ratio > 0.2) or zero_num > 40:     # 没保存第二近的点，仅保存本身点和最近点。比值改为0.5。
-            # if (zero_num>15 and ratio > 0.25) or zero_num > 50:     # 没保存第二近的点，仅保存本身点和最近点. 比值改为大于0.8。 差
-            # if (zero_num>8 and ratio > 0.2) or zero_num > 50:     # 没保存第二近的点，没保存本身点，仅保存最近点
-            # if (zero_num>80 and ratio > 0.40) or zero_num > 200:     # 没有判断一二点比值
-            # if (zero_num>=5 and ratio > 0.25) or zero_num > 50:     # 判断一五点比值，仅保存最近点
+            # # # 3、遍历计算两两特征点(描述子)之间距离，通过此筛选高质量匹配点。
+            filtered_descriptors_indexes = []
+            if None in descriptors_np :
                 if mode:
-                    print("阵列")
-
-                    # os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/array/arrayZero'))
-                    os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/array/array64'))
-                else:
-                    return "阵列"
-
-            else:
-                if mode:
-                    print("非阵列")
-
-                    os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/array/disarray64'))
+                    print("没检测到关键点")
+                    os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/array/error'))
                 else:
                     return "非阵列"
+            else:
+                for i, dot1 in enumerate(descriptors_np):
+                    dot1_dists_dict = {}
+                    for j, dot2 in enumerate(descriptors_np[i+1:]):
+                        dot1_idx = i        # dot1的索引
+                        dot2_idx = i+j+1    # dot2的索引
+                        dot1_idx_and_dot2_idx = str(dot1_idx)+','+str(dot2_idx)     # 如 ‘0,1’
 
-            # e、小于20的个数除以总个数
-            # small_than_20_num = len(z_dists[z_dists<20])
-            # ratio2 = small_than_20_num/total_len
-            # print(ratio2)
-            # if zero_num>35 and ratio2 > 0.6:
-            #     os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/array/array'))
-            # else:
-            #     os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/array/disarray'))
+                        dist = manhattanDist(dot1, dot2)
 
+                        dot1_dists_dict[dot1_idx_and_dot2_idx] = dist
+
+                    # print(dot1_dists_dict)           # 形如 {'0,1': 907.0, '0,2': 1408.0 ... '0,163': 1983.0}
+                    sorted_dists = sorted(dot1_dists_dict.items(), key= lambda xzy : xzy[1])
+                    # print(sorted_dists)             #  形如 [('0,127', 829.0), ('0,1', 907.0), ('0,146', 951.0)...  ('0,105', 4644.0)]
+                    if len(sorted_dists) > 1:
+                        dot1_shotest_dist = sorted_dists[0]         # ('0,127', 829.0)      # 最近点
+                        dot1_secondShort_dist = sorted_dists[1]     #  ('0,1', 907.0)     # 第二近的点
+                        # if len(sorted_dists) < 6:
+                        #     dot1_fifthShort_dist = sorted_dists[-1]
+                        # else:
+                        #     dot1_fifthShort_dist = sorted_dists[5]                            # 第五近的点
+
+
+                        ratio = dot1_shotest_dist[1]/dot1_secondShort_dist[1]     # 829/907     # 1/2比值
+                        # ratio = dot1_shotest_dist[1]/dot1_fifthShort_dist[1]                  # 1/5比值
+
+
+                        if  ratio < T1 :
+                            dot1_idx_decode = str(dot1_shotest_dist[0]).split(',')[0]       # 0    点1的索引
+                            dot2_idx_decode = str(dot1_shotest_dist[0]).split(',')[1]     # 127     离点1最近的点2的索引
+                            # dot3_idx_decode = str(dot1_secondShort_dist[0]).split(',')[1]   # 1     离点1第二近的点3的索引
+
+                            filtered_descriptors_indexes.append(dot1_idx_decode)  # 保存本身点
+                            filtered_descriptors_indexes.append(dot2_idx_decode)    # 保存最近点
+                            # filtered_descriptors_indexes.append(dot3_idx_decode)    # 应该不保存第二近的点 ？？？
+
+
+                des = []
+
+                for idx in filtered_descriptors_indexes:
+                    des.append(descriptors_np[int(idx)])
+                des = np.array(des)
+
+                if des.shape[0] <=2:    # 只有一个无法比较距离，下方会报错。
+                    print('阵列，sift关键点小于2')
+                    if mode:
+                        os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/array/disarray64'))
+                        continue
+                    else:
+                        return "非阵列"
+
+
+
+                disMat = sch.distance.pdist(des, 'euclidean')
+                # disMat = sch.distance.pdist(descriptors_np, 'euclidean')  # 不采用第三步。
+
+                Z = sch.linkage(disMat, method='average')
+                # sch.dendrogram(Z, leaf_rotation=90, leaf_font_size=6,)
+                # plt.show()
+
+                # # cluster = fcluster(Z, t=1, criterion='inconsistent')
+                # cluster = sch.fcluster(Z, t=20, criterion='distance')
+
+                z_dists = Z[:,2]
+                if(test_show):
+                    print(Z)
+                # print(z_dists)
+
+                # a、计算距离100以内的匹配点的个数
+                # small_than_100_num = len(z_dists[z_dists<100])
+                # print(small_than_100_num)
+
+                # b、计算中位数
+                # z_median = np.median(z_dists)
+                # print(z_median)
+                #
+                # c、计算0的个数
+                z_zeron_list =z_dists[z_dists==0]
+                zero_num = len(z_zeron_list)
+                if test_show:
+                    print('0的个数：'+str(zero_num))
+
+                # d、0的个数除以总个数
+                total_len = len(z_dists)
+                ratio = zero_num/total_len
+                if test_show:
+                    print("目前策略，0的比例："+str(ratio))
+                # if (zero_num>40 and ratio > 0.45) or zero_num > 100:  # 保存了第二近的点
+                # if (zero_num>15 and ratio > 0.2) or zero_num > 50:     # 没保存第二近的点，仅保存本身点和最近点。 比值0.6. 优
+                # if (zero_num>20 and ratio > 0.3) or zero_num > 50:     # 没保存第二近的点，仅保存本身点和最近点。比值改为0.7。 第二优
+                if (zero_num>10  and ratio > 0.2) or zero_num > 20:     # 没保存第二近的点，仅保存本身点和最近点。比值改为0.7。 第二优
+                # if (zero_num>10 and ratio > 0.2) or zero_num > 40:     # 没保存第二近的点，仅保存本身点和最近点。比值改为0.5。
+                # if (zero_num>15 and ratio > 0.25) or zero_num > 50:     # 没保存第二近的点，仅保存本身点和最近点. 比值改为大于0.8。 差
+                # if (zero_num>8 and ratio > 0.2) or zero_num > 50:     # 没保存第二近的点，没保存本身点，仅保存最近点
+                # if (zero_num>80 and ratio > 0.40) or zero_num > 200:     # 没有判断一二点比值
+                # if (zero_num>=5 and ratio > 0.25) or zero_num > 50:     # 判断一五点比值，仅保存最近点
+                    if mode:
+                        print("阵列")
+
+                        # os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/array/arrayZero'))
+                        os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/array/array64'))
+                    else:
+                        return "阵列"
+
+                else:
+                    if mode:
+                        print("非阵列")
+
+                        os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/array/disarray64'))
+                    else:
+                        return "非阵列"
+
+                # e、小于20的个数除以总个数
+                # small_than_20_num = len(z_dists[z_dists<20])
+                # ratio2 = small_than_20_num/total_len
+                # print(ratio2)
+                # if zero_num>35 and ratio2 > 0.6:
+                #     os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/array/array'))
+                # else:
+                #     os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/array/disarray'))
+    except Exception as e:
+        raise ElementArrayException(str(e))
 
 
 if __name__ == "__main__":

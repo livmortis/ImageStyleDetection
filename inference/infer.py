@@ -14,6 +14,8 @@ import json
 
 import requests
 from flask import Flask, request, make_response
+from utils.exception import StyleException, WrongParameterException
+import traceback
 
 cwd = os.getcwd()
 upper_cwd_list = cwd.split('/')[1:-1]
@@ -66,40 +68,66 @@ def get_args(arg=None, required=True):
             return v
     else:
         return request.args
-
 @app.route('/imgstyle', methods=['GET'])
 def main():
-    i = get_args('i')
-    gy = get_args('gy')
-    gyid = int(get_args('gyid'))
-    url = base_url + str(i) + ".png"
-    print(i)
-    response = requests.get(url, timeout=5)
-    try:
-        if response.status_code == 200:
-            output, num = png_2output(response.content, i, gy, gyid)
+    if request.method == 'GET':
+        try:
+            i = get_args('i')
+            gy = get_args('gy')
+            gyid = get_args('gyid')
+            try:
+                int(i)
+            except ValueError as e:
+                raise WrongParameterException('error type of i:'+str(i) )
+            try:
+                int(gyid)
+            except ValueError as e:
+                raise WrongParameterException('error type of gyid:'+str(gyid))
+            if not isinstance(gy, str):
+                raise WrongParameterException('error type of gy:' +str(gy))
+            url = base_url + str(i) + ".png"
+            print(i)
+            try:
+                response = requests.get(url, timeout=5)
+                if response.status_code == 200:
+                    response_img = response.content
+                else:
+                    raise RequestException(str(i))
+            except Exception as e:
+                print(traceback.print_exc())
+                print(str(i)+"请求图片失败")
+                result = {}
+                result['code'] = -2
+                result['msg'] = 'download %s img error' % (e)
+                result['data'] = None
+                return json.dumps(result)
+
+
+            output, num = png_2output(response_img, i, gy, gyid)
             result = {}
             result['code'] = 0
             result['msg'] = 'success'
-            result['data'] =  output
-            return json.dumps(result,  ensure_ascii = False)
-        else:
-            print(str(i)+"请求图片失败")
+            result['data'] = output
+            return json.dumps(result, ensure_ascii=False)
+
+
+
+        except Exception as e:
+            print(traceback.print_exc())
             result = {}
-            result['code'] = -1
-            result['msg'] = 'download img error'
+            if isinstance(e, StyleException) :
+                result['code'] = e.code
+                result['msg'] = e.mesg
+            else:
+                result['code'] = -1
+                result['msg'] = str(e)
             result['data'] = None
             return json.dumps(result)
-    except Exception as e:
-        result = {}
-        result['code'] = -2
-        result['msg'] = 'error'
-        result['data'] = None
-        return json.dumps(result)
 
 
 
 if __name__ == '__main__':
+    app.config['JSON_AS_ASCII'] = False
     # pool = Pool()
     # pool.map(main, [i for i in range(100013,100015)])
     app.run(host='0.0.0.0', port=8002, debug=False)

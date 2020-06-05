@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import os
 import sys
 import config as cf
-
+from utils.exception import SymmetricalException
 
 # 2020.6.2  余弦，阈值0.1
 
@@ -225,37 +225,42 @@ def pixel_cosin_method(mode, img_name,img):     # 余弦距离和欧氏距离
 
 
 def judgeSym(listdir, mode, gy, gyid):
-    if gy != -1:
-        if gy == cf.XTYS  or gy == cf.CF:
-            return "对称"
-        elif gy == cf.TD:
-            if gyid in [8,9,10,11] or gyid in [26,27,28,29] or gyid in [44,45,46,47] :
+    try:
+        result = ''
+        if gy != -1:
+            if gy == cf.XTYS  or gy == cf.CF:
                 return "对称"
+            elif gy == cf.TD:
+                if gyid in [8,9,10,11] or gyid in [26,27,28,29] or gyid in [44,45,46,47] :
+                    return "对称"
 
-    for img_name in listdir:
-        if mode:
-            img_path = str(ori_path) + str(img_name)
-        else:
-            img_path = img_name
-        img = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)       # 1 3 6 10
-        imgshape = img.shape
-        # img = cv2.resize(img, (512, int(512 * (imgshape[0]/imgshape[1])) ))
-        # img = cv2.imread(str(ori_path)+str('10222.png'),  cv2.IMREAD_UNCHANGED)
-        if TEST:
-            cv2.imshow('img before abtw', img)
-            cv2.waitKey(0)
-        img = alpha_bg_to_white(img)
-        if TEST:
-            cv2.imshow('img after abtw', img)
-            cv2.waitKey(0)
-        # print('\n')
-        # print(img_name)
-        # print(img.shape)
+        for img_name in listdir:
+            if mode:
+                img_path = str(ori_path) + str(img_name)
+            else:
+                img_path = img_name
+            img = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)       # 1 3 6 10
+            imgshape = img.shape
+            # img = cv2.resize(img, (512, int(512 * (imgshape[0]/imgshape[1])) ))
+            # img = cv2.imread(str(ori_path)+str('10222.png'),  cv2.IMREAD_UNCHANGED)
+            if TEST:
+                cv2.imshow('img before abtw', img)
+                cv2.waitKey(0)
+            img = alpha_bg_to_white(img)
+            if TEST:
+                cv2.imshow('img after abtw', img)
+                cv2.waitKey(0)
+            # print('\n')
+            # print(img_name)
+            # print(img.shape)
 
-        # hist_method(img_name,img,H,W)                    # 直方图法
-        result = pixel_cosin_method(mode, img_name,img)     # 距离法
+            # hist_method(img_name,img,H,W)                    # 直方图法
+            result = pixel_cosin_method(mode, img_name,img)     # 距离法
 
-    return result
+        return result
+
+    except Exception as e:
+        raise SymmetricalException(str(e))
 
 if __name__ == "__main__":
     listdir = os.listdir(ori_path)

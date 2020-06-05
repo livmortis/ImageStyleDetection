@@ -4,6 +4,7 @@ import matplotlib.pyplot as plt
 import os
 import sys
 import config as cf
+from utils.exception import ComplexException
 
 ori_path = "../data/testsym/ori/"
 test_show = False
@@ -70,68 +71,71 @@ def alpha_bg_to_white(img):
 
 
 def compJudge(listdir, mode, gy, gyid):
-    if gy != -1:
-        if gy == cf.CF or gy ==cf.XTYS or gy == cf.ZW or gy == cf.DCX  :
-            return '复杂'
-
-    for img_name in listdir:
-        if mode:
-            img_path = str(ori_path) + str(img_name)
-        else:
-            img_path = img_name
-
-        src = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)  # 1 3 6 10
-        imgshape = src.shape
-        # src = cv2.resize(src, (512, int(512 * (imgshape[0]/imgshape[1])) ))
-        # print("shape is : "+str(src.shape))
-        H = src.shape[0]
-        W = src.shape[1]
-        if test_show:
-            cv2.imshow("src : ", src)
-            cv2.waitKey(0)
-        img = alpha_bg_to_white(src)
-
-        # 黑色复杂元素 + 普通元素 ： 不需要转gray
-        # yez需要
-        # b, g, r, a = cv2.split(img)
-        # img = cv2.merge([r, g, b, a])
-
-        # img = cv2.cvtColor(img, cv2.COLOR_RGBA2GRAY)
-        img = cv2.Canny(img, 100, 400)
-
-        if test_show:
-            cv2.imshow("img after canny : ", img)
-            cv2.waitKey(0)
-        i, contours, hierarchy = cv2.findContours(img, cv2.RETR_TREE,
-                                               cv2.CHAIN_APPROX_NONE)  # CHAIN_APPROX_NONE 所有边界点, RETR_LIST不建立等级关系
-        contours = np.array(contours)
-        cv2.drawContours(img, contours, -1, (255, 180, 255), 2)  # 参数：图像、轮廓、轮廓序号（负数就画出全部轮廓）、颜色、粗细
-        if test_show:
-            cv2.imshow("contour : ", img)
-            cv2.waitKey(0)
-
-        if not contours.shape[0] == 1:
-            contours = np.squeeze(contours)
-        else :
-            contours = np.squeeze(contours)
-            contours = np.array([contours])
-        count_num = contours.shape[0]
-        # print("count_num: "+str(count_num))
-        if count_num <= 7:
-            if mode:
-                os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/conplexity/simple'))
-            else:
-                return '简单'
-        elif count_num <30:
-            if mode:
-                os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/conplexity/common'))
-            else:
-                return '复杂度一般'
-        else:
-            if mode:
-                os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/conplexity/complex'))
-            else:
+    try:
+        if gy != -1:
+            if gy == cf.CF or gy ==cf.XTYS or gy == cf.ZW or gy == cf.DCX  :
                 return '复杂'
+
+        for img_name in listdir:
+            if mode:
+                img_path = str(ori_path) + str(img_name)
+            else:
+                img_path = img_name
+            src = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)  # 1 3 6 10
+            imgshape = src.shape
+            # src = cv2.resize(src, (512, int(512 * (imgshape[0]/imgshape[1])) ))
+            # print("shape is : "+str(src.shape))
+            H = src.shape[0]
+            W = src.shape[1]
+            if test_show:
+                cv2.imshow("src : ", src)
+                cv2.waitKey(0)
+            img = alpha_bg_to_white(src)
+
+            # 黑色复杂元素 + 普通元素 ： 不需要转gray
+            # yez需要
+            # b, g, r, a = cv2.split(img)
+            # img = cv2.merge([r, g, b, a])
+
+            # img = cv2.cvtColor(img, cv2.COLOR_RGBA2GRAY)
+            img = cv2.Canny(img, 100, 400)
+
+            if test_show:
+                cv2.imshow("img after canny : ", img)
+                cv2.waitKey(0)
+            i, contours, hierarchy = cv2.findContours(img, cv2.RETR_TREE,
+                                                   cv2.CHAIN_APPROX_NONE)  # CHAIN_APPROX_NONE 所有边界点, RETR_LIST不建立等级关系
+            contours = np.array(contours)
+            cv2.drawContours(img, contours, -1, (255, 180, 255), 2)  # 参数：图像、轮廓、轮廓序号（负数就画出全部轮廓）、颜色、粗细
+            if test_show:
+                cv2.imshow("contour : ", img)
+                cv2.waitKey(0)
+
+            if not contours.shape[0] == 1:
+                contours = np.squeeze(contours)
+            else :
+                contours = np.squeeze(contours)
+                contours = np.array([contours])
+            count_num = contours.shape[0]
+            # print("count_num: "+str(count_num))
+            if count_num <= 7:
+                if mode:
+                    os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/conplexity/simple'))
+                else:
+                    return '简单'
+            elif count_num <30:
+                if mode:
+                    os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/conplexity/common'))
+                else:
+                    return '复杂度一般'
+            else:
+                if mode:
+                    os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/conplexity/complex'))
+                else:
+                    return '复杂'
+    except Exception as e :
+        raise ComplexException(str(e))
+
 
 if __name__ == "__main__":
     listdir = os.listdir(ori_path)

@@ -5,6 +5,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 import sys
+from utils.exception import ContourShapeDectectException
 
 ori_path = "../data/connectivity/ori/"
 
@@ -73,149 +74,150 @@ def draw_contours(img, contours):
     cv2.waitKey(0)
 
 def judgeCon(listdir, mode, round_np,rouCube_np):
+    try:
+        for img_name in listdir:
+            if mode:
+                img_path = str(ori_path) + str(img_name)
+            else:
+                img_path = img_name
 
-    for img_name in listdir:
-        if mode:
-            img_path = str(ori_path) + str(img_name)
-        else:
-            img_path = img_name
-
-        # print(img_path)
-        src = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)       # 1 3 6 10
-        imgshape = src.shape
-        # src = cv2.resize(src, (512, int(512 * (imgshape[0]/imgshape[1])) ))
-        img = alpha_bg_to_white(src)
-        b, g, r, a = cv2.split(img)
-        img = cv2.merge([r, g, b, a])
-        img = cv2.cvtColor(img, cv2.COLOR_RGBA2GRAY)
-        # cv2.imshow('img', img)
-        # cv2.waitKey(0)
-        W = img.shape[1]
-        H = img.shape[0]
-        # print(img.shape)
-
-
-        i, contours, hierarchy = cv2.findContours(img, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)  # CHAIN_APPROX_NONE 所有边界点, RETR_LIST不建立等级关系
-        contours = np.array(contours)
-
-
-
-        # draw_contours(src, contours)      # 测试不执行
-        # save_round_np(contours)            # 测试不执行
-        # save_rouCube_np(contours)          # 测试不执行
-
-
-
-        four_conner = [img[5, 5], img[H - 5, 5], img[5, W - 5], img[H - 5, W - 5]]
-        four_conner_shrank = [img[40, 40], img[H - 40, 40], img[40, W - 40], img[H - 40, W - 40]]
-
-        if 0 in four_conner:  # 方形
-            # print('方形')
-            # print(img_name)
+            # print(img_path)
+            src = cv2.imread(img_path, cv2.IMREAD_UNCHANGED)       # 1 3 6 10
+            imgshape = src.shape
+            # src = cv2.resize(src, (512, int(512 * (imgshape[0]/imgshape[1])) ))
+            img = alpha_bg_to_white(src)
+            b, g, r, a = cv2.split(img)
+            img = cv2.merge([r, g, b, a])
+            img = cv2.cvtColor(img, cv2.COLOR_RGBA2GRAY)
+            # cv2.imshow('img', img)
+            # cv2.waitKey(0)
+            W = img.shape[1]
+            H = img.shape[0]
             # print(img.shape)
-            all_contours = []
-            for con in contours:
-                con_flat = con.flatten()
-                all_contours.extend(con_flat)
-            all_contours_np = np.array(all_contours)
 
-            intersection = np.intersect1d(all_contours_np, limit_dot)
-            if len(intersection) == 0:
-                # print(str(img_name) + "镂空")
-                if mode:
+
+            i, contours, hierarchy = cv2.findContours(img, cv2.RETR_LIST, cv2.CHAIN_APPROX_NONE)  # CHAIN_APPROX_NONE 所有边界点, RETR_LIST不建立等级关系
+            contours = np.array(contours)
+
+
+
+            # draw_contours(src, contours)      # 测试不执行
+            # save_round_np(contours)            # 测试不执行
+            # save_rouCube_np(contours)          # 测试不执行
+
+
+
+            four_conner = [img[5, 5], img[H - 5, 5], img[5, W - 5], img[H - 5, W - 5]]
+            four_conner_shrank = [img[40, 40], img[H - 40, 40], img[40, W - 40], img[H - 40, W - 40]]
+
+            if 0 in four_conner:  # 方形
+                # print('方形')
+                # print(img_name)
+                # print(img.shape)
+                all_contours = []
+                for con in contours:
+                    con_flat = con.flatten()
+                    all_contours.extend(con_flat)
+                all_contours_np = np.array(all_contours)
+
+                intersection = np.intersect1d(all_contours_np, limit_dot)
+                if len(intersection) == 0:
                     # print(str(img_name) + "镂空")
-                    os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/connectivity/connected1'))
+                    if mode:
+                        # print(str(img_name) + "镂空")
+                        os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/connectivity/connected1'))
+                    else:
+                        return "镂空"
                 else:
-                    return "镂空"
-            else:
-                # print(str(img_name) + "局部")
-                if mode :
-                    os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/connectivity/disconnected1'))
+                    # print(str(img_name) + "局部")
+                    if mode :
+                        os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/connectivity/disconnected1'))
+                    else:
+                        return "局部"
+
+            elif 0 in four_conner_shrank:  # 圆方形
+                # print('圆方形')
+                all_contours_str = []
+                for one_con in contours:
+                    for one_dot in one_con:
+                        one_dot = np.squeeze(one_dot)
+                        # 右下 448
+                        # 左下 63
+                        if (one_dot[0] in [0,1] and one_dot[1] in list(range(75, 430))  ) or\
+                            (one_dot[0] in  list(range(75, 430)) and one_dot[1] in [0,1]) or\
+                            (one_dot[0] in  list(range(75, 430)) and one_dot[1] in [510,511,512]) or\
+                            (one_dot[0] in [510,511,512] and one_dot[1] in  list(range(75, 430))):
+                            # print(str(img_name) + "局部")
+                            if mode:
+                                os.system(
+                                    'cp %s %s' % (str(ori_path) + str(img_name), '../data/connectivity/disconnected1'))
+                            else:
+                                return "局部"
+                            break
+                        all_contours_str.append(str(one_dot))
+                    else:
+                        continue
+                    break
+                all_contours_np = np.array(all_contours_str)
+
+                intersection = np.intersect1d(all_contours_np, rouCube_np)
+                # print(len(intersection))
+
+                if len(intersection) in [319, 320, 321, 322, 323]:
+                    # print(str(img_name) + "镂空")
+                    if mode:
+                        os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/connectivity/connected1'))
+                    else:
+                        return "镂空"
                 else:
-                    return "局部"
+                    # print(str(img_name) + "局部")
+                    if mode:
+                        os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/connectivity/disconnected1'))
+                    else:
+                        return "局部"
 
-        elif 0 in four_conner_shrank:  # 圆方形
-            # print('圆方形')
-            all_contours_str = []
-            for one_con in contours:
-                for one_dot in one_con:
-                    one_dot = np.squeeze(one_dot)
-                    # 右下 448
-                    # 左下 63
-                    if (one_dot[0] in [0,1] and one_dot[1] in list(range(75, 430))  ) or\
-                        (one_dot[0] in  list(range(75, 430)) and one_dot[1] in [0,1]) or\
-                        (one_dot[0] in  list(range(75, 430)) and one_dot[1] in [510,511,512]) or\
-                        (one_dot[0] in [510,511,512] and one_dot[1] in  list(range(75, 430))):
-                        # print(str(img_name) + "局部")
-                        if mode:
-                            os.system(
-                                'cp %s %s' % (str(ori_path) + str(img_name), '../data/connectivity/disconnected1'))
-                        else:
-                            return "局部"
-                        break
-                    all_contours_str.append(str(one_dot))
+            else:  # 圆形
+                # print('圆形')
+                all_contours_str = []
+                for one_con in contours:
+                    for one_dot in one_con:
+                        one_dot = np.squeeze(one_dot)
+                        if (one_dot[0] in [0,1] and one_dot[1] in [255,256,257]) or\
+                            (one_dot[0] in [255,256,257] and one_dot[1] in [0,1]) or\
+                            (one_dot[0] in [255,256,257] and one_dot[1] in [510,511,512]) or\
+                            (one_dot[0] in [510,511,512] and one_dot[1] in [255, 256, 257]) :
+
+                            # print(str(img_name) + "贴边, 一定不镂空")
+                            if mode:
+                                os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/connectivity/disconnected1'))
+                            else:
+                                return "局部"
+                            break
+                        all_contours_str.append(str(one_dot))
+                    else:
+                        continue
+                    break
+                all_contours_np = np.array(all_contours_str)
+
+                # print(all_contours_np)
+                # print(round_np)
+                intersection = np.intersect1d(all_contours_np, round_np)
+                # print(len(intersection))
+
+                if len(intersection) in [1225,1226,1227,1228,1229]:
+                    # print(str(img_name) + "镂空")
+                    if mode:
+                        os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/connectivity/connected1'))
+                    else:
+                        return "镂空"
                 else:
-                    continue
-                break
-            all_contours_np = np.array(all_contours_str)
-
-            intersection = np.intersect1d(all_contours_np, rouCube_np)
-            # print(len(intersection))
-
-            if len(intersection) in [319, 320, 321, 322, 323]:
-                # print(str(img_name) + "镂空")
-                if mode:
-                    os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/connectivity/connected1'))
-                else:
-                    return "镂空"
-            else:
-                # print(str(img_name) + "局部")
-                if mode:
-                    os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/connectivity/disconnected1'))
-                else:
-                    return "局部"
-
-        else:  # 圆形
-            # print('圆形')
-            all_contours_str = []
-            for one_con in contours:
-                for one_dot in one_con:
-                    one_dot = np.squeeze(one_dot)
-                    if (one_dot[0] in [0,1] and one_dot[1] in [255,256,257]) or\
-                        (one_dot[0] in [255,256,257] and one_dot[1] in [0,1]) or\
-                        (one_dot[0] in [255,256,257] and one_dot[1] in [510,511,512]) or\
-                        (one_dot[0] in [510,511,512] and one_dot[1] in [255, 256, 257]) :
-
-                        # print(str(img_name) + "贴边, 一定不镂空")
-                        if mode:
-                            os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/connectivity/disconnected1'))
-                        else:
-                            return "局部"
-                        break
-                    all_contours_str.append(str(one_dot))
-                else:
-                    continue
-                break
-            all_contours_np = np.array(all_contours_str)
-
-            # print(all_contours_np)
-            # print(round_np)
-            intersection = np.intersect1d(all_contours_np, round_np)
-            # print(len(intersection))
-
-            if len(intersection) in [1225,1226,1227,1228,1229]:
-                # print(str(img_name) + "镂空")
-                if mode:
-                    os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/connectivity/connected1'))
-                else:
-                    return "镂空"
-            else:
-                # print(str(img_name) + "局部")
-                if mode:
-                    os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/connectivity/disconnected1'))
-                else:
-                    return "局部"
-
+                    # print(str(img_name) + "局部")
+                    if mode:
+                        os.system('cp %s %s' % (str(ori_path) + str(img_name), '../data/connectivity/disconnected1'))
+                    else:
+                        return "局部"
+    except Exception as e:
+        raise ContourShapeDectectException(str(e))
 
 
         # for cont in contours:
